@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>LawFinder</title>
+  <meta name="description" content="LawFinder – Search Justice, Find Clarity" />
+  
+    <style>
+  :root {
+    --bg: #0d0d0d;
+    --panel-bg: rgba(20,20,20,0.9);
+    --gold: #d4af37;
+    --gold-glow: rgba(212,175,55,0.4);
+    --red: #e63946;
+    --muted: #b0c4de;
+    --max-width: 960px;
+    --radius: 14px;
+  }
+
+  /* Base */
+  html,body {
+    height:100%;
+    margin:0;
+    background:var(--bg);
+    color:var(--gold);
+    font-family: "Merriweather", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color:var(--gold); text-decoration:none; }
+  a:hover { color:var(--red); text-shadow:0 0 6px rgba(230,57,70,0.5); }
+
+  /* Layout */
+  .page {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px 100px;
+  }
+  .card {
+    max-width:var(--max-width);
+    width:100%;
+    background:var(--panel-bg);
+    border:1px solid rgba(212,175,55,0.25);
+    border-radius:var(--radius);
+    padding:32px;
+    text-align:center;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.7);
+  }
+
+  /* Branding */
+  .brand {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    justify-content:center;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .brand img {
+    width:90px;
+    height:90px;
+    border-radius:12px;
+    border:1px solid rgba(212,175,55,0.4);
+    box-shadow: 0 0 15px var(--gold-glow);
+  }
+  .brand h1 {
+    margin:0;
+    font-size:1.5rem;
+    font-family:"Cinzel", serif;
+    color:var(--gold);
+    letter-spacing:1.5px;
+    text-shadow:0 0 10px var(--gold-glow);
+  }
+  .brand p {
+    margin:4px 0 0;
+    font-size:1rem;
+    font-family:"Roboto", sans-serif;
+    color:var(--muted);
+  }
+
+  /* Search */
+  .search-panel {
+    margin:20px 0;
+    padding:14px;
+    border-radius:12px;
+    background:var(--panel-bg);
+    border:1px solid rgba(212,175,55,0.15);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  /* Buttons */
+  .btn {
+    background:transparent;
+    border:1px solid var(--gold);
+    padding:10px 20px;
+    border-radius:999px;
+    font-size:0.9rem;
+    color:var(--gold);
+    font-family:"Roboto Mono", monospace;
+    cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .btn:hover {
+    background:rgba(212,175,55,0.1);
+    transform:translateY(-2px);
+    box-shadow:0 6px 16px rgba(212,175,55,0.25);
+  }
+
+  /* Footer */
+  .footer {
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    background:rgba(10,10,10,0.95);
+    border-top:1px solid rgba(212,175,55,0.2);
+    text-align:center;
+    padding:12px;
+    font-size:0.85rem;
+    color:var(--muted);
+  }
+  .footer a { color:var(--gold); }
+  .footer a:hover { color:var(--red); }
+
+  </style>
+</head>
+<body>
+  <main class="page" role="main">
+    <section class="card" aria-label="LawFinder">
+      <div class="brand" role="banner">
+        <a href="./index.html" aria-label="LawFinder">
+          <!-- আপনার লোকাল বা হোস্টেড লোগো বদলে দিতে পারেন -->
+          <img src="./LawFinder.png" alt="Law Finder" />
+        </a>
+        <div>
+          <h1>LawFinder</h1>
+          <p>Search Justice & Find Clarity</p>
+        </div>
+      </div>
+
+      <div class="search-wrap" aria-live="polite">
+        <div class="search-panel" id="search-panel">
+          <!-- Google CSE: আপনার cx ID ঠিক আছে কিনা চেক করুন -->
+          <script async src="https://cse.google.com/cse.js?cx=d7aeb190999514f96"></script>
+          <div class="gcse-search"></div>
+        </div>
+        <div class="helpers" aria-hidden="false">    
+        </div>
+          <p style="margin-top:10px;">
+            <a href="http://bdlaws.minlaw.gov.bd" target="_blank" rel="noopener noreferrer">Bangladesh Laws</a> |
+            <a href="https://www.barcouncil.gov.bd" target="_blank" rel="noopener noreferrer">Bangladesh Bar Council</a> |
+            <a href="https://www.supremecourt.gov.bd/" target="_blank" rel="noopener noreferrer">Supreme Court of Bangladesh</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    Copyright © <a href="https://github.com/HumayunShariarHimu" target="_blank" rel="noopener noreferrer">Humayun
+    Shariar Himu</a> — Designed for Bangladesh Legal Search. All rights reserved.
+  </footer>
+
+  <!-- ==========================
+       JS: persist visited links (localStorage)
+       Adds class "persist-visited" to clicked links so they stay red.
+       It stores a set of clicked hrefs in localStorage['visitedLinks_v1'].
+  ===========================-->
+  <script>
+    (function(){
+      const STORAGE_KEY = 'visitedLinks_v1';
+      // load saved visited links set
+      function loadSet(){
+        try{
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if(!raw) return new Set();
+          return new Set(JSON.parse(raw));
+        }catch(e){ return new Set(); }
+      }
+      function saveSet(set){
+        try{
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(set)));
+        }catch(e){}
+      }
+
+      const visited = loadSet();
+
+      // mark existing anchors on page load
+      function markAnchors(){
+        document.querySelectorAll('a[href]').forEach(a=>{
+          try{
+            const href = a.getAttribute('href');
+            // ignore javascript:, mailto:, fragment-only hrefs
+            if(!href || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('#')) return;
+            if(visited.has(href)) a.classList.add('persist-visited');
+          }catch(e){}
+        });
+      }
+
+      // delegate clicks: when a link is clicked, store its href
+      document.addEventListener('click', function(e){
+        const a = e.target.closest('a[href]');
+        if(!a) return;
+        const href = a.getAttribute('href');
+        if(!href) return;
+        if(href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('#')) return;
+        // store (use full href for external? we store as attribute value to be consistent)
+        visited.add(href);
+        saveSet(visited);
+        // add class immediately so UX is instant
+        a.classList.add('persist-visited');
+      }, true);
+
+      // run initial marking
+      markAnchors();
+
+      // optional: observe DOM changes to mark newly inserted links (e.g., CSE results)
+      const observer = new MutationObserver((mutations)=>{
+        markAnchors();
+      });
+      observer.observe(document.body, {childList:true, subtree:true});
+    })();
+  </script>
+</body>
+</html>
